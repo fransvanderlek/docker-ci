@@ -4,4 +4,4 @@ Creates a CI docker image for creating other docker images
 run docker-ci.sh to create CI image
 run run-docker-ci.sh to execute build
 
-see also cmd.sh
+see also docker-build/cmd.sh

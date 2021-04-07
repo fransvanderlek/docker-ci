@@ -1,6 +1,5 @@
 #!/bin/bash
-ECHO "Hello World"
-#git clone https://github.com/fransvanderlek/opcuaproxy.git
-#cd opcuaproxy
-#mvn clean dependency:copy-dependencies package
-#docker build . -t opcuaproxy:latest
+git clone https://github.com/fransvanderlek/opcuaproxy.git
+cd opcuaproxy
+mvn clean dependency:copy-dependencies package
+docker build . -t opcua-proxy:latest

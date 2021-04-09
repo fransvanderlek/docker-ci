@@ -6,5 +6,5 @@ ADD ./docker-build/cmd.sh /usr/local/bin/cmd.sh
 RUN chmod +x /usr/local/bin/cmd.sh
 RUN apt-get install git -y
 
-CMD /bin/sh
+CMD ["cmd.sh"]
 

@@ -1,4 +1,4 @@
 #!/bin/bash
-git clone https://github.com/fransvanderlek/opcuaproxy.git
-cd opcuaproxy
+git clone $GIT_REPO_URL
+cd $PROJECT_DIR
 /bin/sh ./build.sh

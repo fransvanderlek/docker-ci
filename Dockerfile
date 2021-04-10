@@ -6,6 +6,7 @@ RUN chmod +x /usr/local/bin/cmd.sh
 RUN mkdir /maven_repository
 VOLUME /maven_repository
 ADD ./docker-build/maven-settings.xml /usr/share/maven/conf/settings.xml
+ADD ./docker-build/maven-settings.xml /etc/maven/settings.xml
 
 CMD ["cmd.sh"]
 

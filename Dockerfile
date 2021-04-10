@@ -6,6 +6,7 @@ ADD ./docker-build/cmd.sh /usr/local/bin/cmd.sh
 RUN chmod +x /usr/local/bin/cmd.sh
 RUN apt-get install git -y
 RUN mkdir /maven_repository
+VOLUME /maven_repository
 ADD ./docker-build/maven-settings.xml /usr/share/maven/conf/settings.xml
 
 CMD ["cmd.sh"]

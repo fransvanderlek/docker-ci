@@ -1,5 +1,5 @@
 FROM arm64v8/alpine
-RUN apk add apt-transport-https ca-certificates curl lxc iptables tar
+//RUN apk add apt-transport-https ca-certificates curl lxc iptables tar
 RUN curl -sSL https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0.2/graalvm-ce-java11-linux-aarch64-21.0.0.2.tar.gz
 RUN tar -xzf graalvm-ce-java11-linux-aarch64-21.0.0.2.tar.gz
 RUN export PATH=/graalvm-ce-java11-21.0.0.2/bin:$PATH

@@ -1,1 +1,0 @@
-docker run --env GIT_REPO_URL=https://github.com/fransvanderlek/opcuaproxy.git --env PROJECT_DIR=opcuaproxy -v /var/run/docker.sock:/var/run/docker.sock -v maven_repository_vol:/maven_repository -ti docker-ci

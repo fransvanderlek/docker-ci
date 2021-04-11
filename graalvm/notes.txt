@@ -1,0 +1,92 @@
+notes
+=====
+apparently a run of 
+
+docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
+is needed!
+
+check that succes with
+
+cat /proc/sys/fs/binfmt_misc/qemu-arm
+
+output:
+
+fransvanderlek@virtbuntu:~$ cat /proc/sys/fs/binfmt_misc/qemu-arm
+enabled
+interpreter /usr/bin/qemu-arm-static
+flags: F
+offset 0
+magic 7f454c4601010100000000000000000002002800
+mask ffffffffffffff00fffffffffffffffffeffffff
+
+
+then we can do:
+
+docker run -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static --rm -ti arm32v7/debian:stretch-slim 
+
+and also:
+
+sudo docker run -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static --rm -ti arm64v8/ubuntu
+
+
+and it works.
+
+
+steps:
+
+FROM arm64v8/ubuntu
+RUN apt-get update && apt-get -y install wget tar
+RUN wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0.2/graalvm-ce-java11-linux-aarch64-21.0.0.2.tar.gz
+RUN tar -xzf graalvm-ce-java11-linux-aarch64-21.0.0.2.tar.gz
+ENV PATH=/graalvm-ce-java11-21.0.0.2/bin:$PATH
+ENV JAVA_HOME=/graalvm-ce-java11-21.0.0.2
+ENV GRAALVM_HOME=/graalvm-ce-java11-21.0.0.2
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qqy install git
+RUN gu install native-image
+
+git clone https://github.com/graalvm/graalvm-demos.git
+cd graalvm-demos/native-list-dir
+
+apt-get install build-essential
+
+apt-get install libz-dev zlib1g-dev
+
+./build.sh
+
+##NO ERRORS##
+
+./run.sh
+
+##WORKS!##
+
+wget https://apache.osuosl.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
+mkdir /usr/share/maven
+tar -xzf /tmp/apache-maven-3.8.1-bin.tar.gz -C /usr/share/maven --strip-components=1
+ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+mvn -version
+
+output:
+Apache Maven 3.8.1 (05c21c65bdfed0f71a2f2ada8b84da59348c4c5d)
+Maven home: /usr/share/maven
+Java version: 11.0.10, vendor: GraalVM Community, runtime: /graalvm-ce-java11-21.0.0.2
+Default locale: en_US, platform encoding: ANSI_X3.4-1968
+OS name: "linux", version: "5.4.0-70-generic", arch: "aarch64", family: "unix"
+
+( following https://github.com/graalvm/graalvm-demos/tree/master/native-image-workshop )
+
+cd native-image-workshop
+mvn clean package exec:exec -PJAVA
+
+native-image -jar ./target/graalvmnidemos-1.0-SNAPSHOT-jar-with-dependencies.jar --no-fallback --no-server -H:Class=oracle.App -H:Name=file-count
+
+##WORKS!##
+
+use maven to build:
+mvn clean package exec:exec -PNATIVE_IMAGE
+
+##WORKS!##
+
+
+
+

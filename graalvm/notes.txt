@@ -4,15 +4,14 @@ apparently a run of
 
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
-is needed!
+is needed every time before running container ( see also https://github.com/bossjones/docker-arm64v8-ubuntu-qemu )
 
-check that succes with
+check succes with
 
 cat /proc/sys/fs/binfmt_misc/qemu-arm
 
-output:
+output should include enabled flag
 
-fransvanderlek@virtbuntu:~$ cat /proc/sys/fs/binfmt_misc/qemu-arm
 enabled
 interpreter /usr/bin/qemu-arm-static
 flags: F

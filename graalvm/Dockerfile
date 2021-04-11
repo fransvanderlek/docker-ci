@@ -9,3 +9,7 @@ RUN wget https://apache.osuosl.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8
 RUN tar -xzf ./apache-maven-3.8.1-bin.tar.gz -C /usr/share/maven --strip-components=1
 RUN ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 RUN gu install native-image
+ADD ./cmd.sh /usr/local/bin/cmd.sh
+RUN chmod +x /usr/local/bin/cmd.sh
+ENV GRAALVM_HOME=$JAVA_HOME
+CMD ["cmd.sh"]

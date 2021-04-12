@@ -12,4 +12,6 @@ RUN gu install native-image
 ADD ./cmd.sh /usr/local/bin/cmd.sh
 RUN chmod +x /usr/local/bin/cmd.sh
 ENV GRAALVM_HOME=$JAVA_HOME
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install curl
+RUN curl -sSL https://get.docker.com/ | sh
 CMD ["cmd.sh"]

@@ -4,5 +4,13 @@ services:
     image: dev-env:latest
 
     ports:
-      - "12686:12686"
+      - "3000:3000"
+
+    volumes:
+      - home_workspace:/home/workspace:cached
+      - maven_repository_vol:/maven_repository
+      - /var/run/docker.sock:/var/run/docker.sock
  
+volumes:
+  home_workspace:
+  maven_repository_vol:

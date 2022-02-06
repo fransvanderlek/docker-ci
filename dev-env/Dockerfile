@@ -9,10 +9,7 @@ apt-get -qqy install default-jdk maven apt-transport-https ca-certificates curl 
 rm -rf /var/lib/apt/lists/*
 
 RUN curl -sSL https://get.docker.com/ | sh
-RUN mkdir /maven_repository
-VOLUME /maven_repository
-ADD ./maven-settings.xml /usr/share/maven/conf/settings.xml
-ADD ./maven-settings.xml /etc/maven/settings.xml
+
 
 WORKDIR /home/
 
@@ -55,7 +52,16 @@ RUN chmod g+rw /home && \
     chown -R $USERNAME:$USERNAME /home/workspace && \
     chown -R $USERNAME:$USERNAME ${OPENVSCODE_SERVER_ROOT}
 
+RUN mkdir /maven_repository && chmod 777 /maven_repository
+ADD ./maven-settings.xml /usr/share/maven/conf/settings.xml
+ADD ./maven-settings.xml /etc/maven/settings.xml
+
+RUN usermod -aG docker $USERNAME
+
 USER $USERNAME
+
+
+
 
 WORKDIR /home/workspace/
 

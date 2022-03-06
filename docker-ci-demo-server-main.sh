@@ -1,0 +1,1 @@
+docker run --env GIT_REPO_URL=https://github.com/fransvanderlek/demo-server.git --env PROJECT_DIR=demo-server -v /var/run/docker.sock:/var/run/docker.sock -v maven_repository_vol:/maven_repository -ti docker-ci

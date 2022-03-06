@@ -1,3 +1,4 @@
 /.project
 .bash_history
 dev-env/.openvscode-server
+.gitpod.yml
